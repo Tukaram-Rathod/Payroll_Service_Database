@@ -270,3 +270,131 @@ mysql> select * from employee_payroll where name = 'terisa';
 2 rows in set (0.05 sec)
 
 mysql>
+=======================================================================================================================================>
+#UC11:
+mysql> update Address_Book_Service set TYPE='Family & Friend' where First_Name='Aarti';
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Address_Book_Service;
++------------+-----------+------------+----------+-------------+--------+--------------+----------------------+------+-----------------+
+| First_Name | Last_Name | Address    | City     | State       | Zip    | Phone_Number | Email                | Name | TYPE            |
++------------+-----------+------------+----------+-------------+--------+--------------+----------------------+------+-----------------+
+| Ashish     | Rathod    | Gangakhed  | Parbhani | Maharashtra | 431514 |   8788594431 | Ashu123@gmail.com    | NULL | Family          |
+| Aarti      | Bhosale   | Aurangabad | Mumbai   | Maharashtra | 431001 |   8805925703 | Aarti03@yahoo.com    | NULL | Family & Friend |
+| Tukaram    | Rathod    | Bhadgaon   | Jalgaon  | Maharashtra | 431548 |   8766556789 | Arjun321@hotmail.com | NULL | Professional    |
++------------+-----------+------------+----------+-------------+--------+--------------+----------------------+------+-----------------+
+3 rows in set (0.02 sec)
+=======================================================================================================================================>
+#UC12:
+//person_info
+mysql> create table person_info
+    -> (
+    -> personID int primary key,
+    -> firstName varchar(150),
+    -> lastName varchar(150),
+    -> address varchar(150),
+    -> city varchar(150),
+    -> zip int(10),
+    -> state char(50),
+    -> phoneNumber bigint(20),
+    -> email varchar(20)
+    -> );
+Query OK, 0 rows affected, 2 warnings (2.40 sec)
+
+mysql> insert into person_info values(1,'Prasad','Pawar','Latur','Chakur',456123,'Maharashtra',7896451230,'prasad@gmail.com');
+Query OK, 1 row affected (0.29 sec)
+
+mysql> INSERT INTO person_info VALUES(2,'Payal','Chavan','Loha','Nanded',431400,'Maharashtra',8974526310,'payal@gmail.com');
+Query OK, 1 row affected (0.22 sec)
+
+mysql> INSERT INTO person_info VALUES(3,'Vaibhav','Vankhede','Cidco','Aurangabad',431010,'Maharashtra',8785964102,'vaibhav@yahoo.com');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO person_info VALUES(4,'Sandhya','Jadhav','Hadco','Aurangabad',431010,'Maharashtra',8705964102,'sandhu@hotmail.com');
+Query OK, 1 row affected (0.25 sec)
+
+mysql> select * from person_info;
++----------+-----------+----------+---------+------------+--------+-------------+-------------+--------------------+
+| personID | firstName | lastName | address | city       | zip    | state       | phoneNumber | email              |
++----------+-----------+----------+---------+------------+--------+-------------+-------------+--------------------+
+|        1 | Prasad    | Pawar    | Latur   | Chakur     | 456123 | Maharashtra |  7896451230 | prasad@gmail.com   |
+|        2 | Payal     | Chavan   | Loha    | Nanded     | 431400 | Maharashtra |  8974526310 | payal@gmail.com    |
+|        3 | Vaibhav   | Vankhede | Cidco   | Aurangabad | 431010 | Maharashtra |  8785964102 | vaibhav@yahoo.com  |
+|        4 | Sandhya   | Jadhav   | Hadco   | Aurangabad | 431010 | Maharashtra |  8705964102 | sandhu@hotmail.com |
++----------+-----------+----------+---------+------------+--------+-------------+-------------+--------------------+
+4 rows in set (0.00 sec)
+//# person_type
+mysql> CREATE TABLE person_type
+    -> (
+    -> type_id INT PRIMARY KEY,
+    -> type_name VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (2.51 sec)
+
+mysql> describe person_type;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| type_id   | int         | NO   | PRI | NULL    |       |
+| type_name | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.24 sec)
+
+mysql> INSERT INTO person_type values(10,'family');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> INSERT INTO person_type values(20,'family');
+Query OK, 1 row affected (0.24 sec)
+
+mysql> INSERT INTO person_type values(30,'friend');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> INSERT INTO person_type values(40,'friend');
+Query OK, 1 row affected (0.15 sec)
+
+
+mysql> select * from peron_type;
++---------+-----------+
+| type_id | type_name |
++---------+-----------+
+|      10 | family    |
+|      20 | family    |
+|      30 | friend    |
+|      40 | friend    |
++---------+-----------+
+4 rows in set (0.00 sec)
+//type
+mysql> create table type
+    -> (
+    -> personID INT,
+    -> FOREIGN KEY(personID) REFERENCES person_info(personID),
+    -> type_id INT,
+    -> FOREIGN KEY(type_id) REFERENCES person_type(type_id)
+    -> );
+Query OK, 0 rows affected (4.07 sec)
+
+mysql> insert into type balues(1,10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'balues(1,10)' at line 1
+mysql> insert into type values(1,10);
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into type values(2,20);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into type values(3,30);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into type values(4,40);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from type;
++----------+---------+
+| personID | type_id |
++----------+---------+
+|        1 |      10 |
+|        2 |      20 |
+|        3 |      30 |
+|        4 |      40 |
++----------+---------+
+4 rows in set (0.00 sec)
